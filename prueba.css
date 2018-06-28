@@ -1,0 +1,56 @@
+html{
+    margin: 0;
+}
+
+body{
+    background-image: url(./fondoTetris.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-left: 403px;
+    margin-top: 125px;
+}
+
+.tetris{
+    border-collapse: collapse;
+}
+.tetris tr td{
+    width:20px;
+    height:20px;
+    padding: 0px;
+}
+.figura0{
+    background-color: #ffffff;
+}
+.figura1{
+    background-color: #54bef7;
+}
+.figura2{
+    background-color: #b868ff;
+}
+.figura3{
+    background-color: #ff0077;
+}
+.figura4{
+    background-color: #FFFF00;
+}
+.figura5{
+    background-color: #beff47;
+}
+.figura6{
+    background-color: #a3a3a3;
+}
+.figura7{
+    background-color: #f47b02;
+}
+#empezar{
+    background-color: #22cce2;
+    border:none;
+    padding: 10px 20px;
+    color:white;
+    font-family: 'sans-serif';font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    margin-left:-351px;
+    margin-top: 60px;
+    cursor:pointer;
+}
