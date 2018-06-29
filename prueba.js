@@ -1,8 +1,4 @@
-//1.Canvas
-//    var canvas = document.getElementById('canvas');
-//    var ctx = canvas.getContext('2d');
 
-//2.Constants
     var velocidad=40000;
     var panel=new Array(20);
     var pieza=0;
@@ -30,11 +26,6 @@
         [1,0,5,6,3], //pieza7
     ];
 
-//3.Class
-
-//4.Instances
-
-//5.MainFunctions
     function start(){
         bajarPieza();
         colores();
@@ -46,7 +37,6 @@
         setTimeout("start()", 1);
     }
 
-//6.Aux Functions
     function nuevaPieza(){
         y=4;
         x=0;
@@ -65,12 +55,12 @@
         nuevaPieza();
     }
 
-    function bajarPieza(){
+    function bajarPieza(){ //Cambié las variables para que la pieza descienda y no de rebote en el eje Y
         x=x+1;
         if (piezaChoca()){
             x=x-1;
             for (i=1;i < 5;i++){
-                movimiento=diseño[pieza][i];
+                movimiento=diseño[pieza][i]; //figura random
                 var coordenadas2=rotarFigura(coordenadas[movimiento]);
                 if (coordenadas2 [0] +x >= 0 && coordenadas2 [0] +x < 20 &&
                     coordenadas2 [1] +y >=0 && coordenadas2 [1] +y < 9){
@@ -82,27 +72,29 @@
         }
     }
 
+    //Resultado real panel [y,x]
+
     function reiniciar(){
-        var reiniciar=0;
+        var inicio=0;
         for (var c=0;c < 9;c++){
             if (panel [0] [c] !=0){
-                reiniciar=1;
+                inicio=1;
             }
         }
-        if (reiniciar===1){
+        if (inicio===1){
             if (puntos > record){
                 record=puntos;
             }
-            juegoNuevo();
+            juegoNuevo(); //cortar aquí para que empiece el segundo jugador
         }else{
             nuevaPieza();
         }
     }
 
-    function moverPieza(movimiento){
-        y=y+movimiento;
+    function moverPieza(direccion){
+        y=y+direccion;
         if (piezaChoca()){
-            y=y-movimiento;
+            y=y-direccion;
         }
     }
 
@@ -123,12 +115,20 @@
         var coordenadas2=[e[0], e[1]];
         for (a=0;a < rot ;a++){
             var y=coordenadas2 [1]; 
-            var x=-coordenadas2 [0] ;
+            var x=-coordenadas2 [0];
             coordenadas2 [0] =y;
             coordenadas2 [1] =x;
         }
         return coordenadas2;
     }
+
+    //cos(a), sen(a)
+    //matriz[y][x]
+    //matriz[x][y]
+
+    //cos(a), -sen(a)
+    //matriz[x][y]
+    //matriz[y][x]
     
     function estaOcupado(x,y){
         if (x < 0) return false;
@@ -152,16 +152,16 @@
             var cuadros=0;
             for (x=0;x < 9;x++){
                 if (panel[y][x]>0){
-                    cuadros++;
+                    cuadros++; 
                 }
             }
-            if (cuadros===9){
-                for (y2=y;y2 > 0;y2--){
-                    for (x2=0;x2 < 9;x2++){
-                        panel[y2][x2]=panel[y2-1][x2];
+            if (cuadros===9){                           //(x)cuadros.length lleno de 1?
+                for (y2=y;y2 > 0;y2--){                 //borra la fila
+                    for (x2=0;x2 < 9;x2++){          
+                        panel[y2][x2]=panel[y2-1][x2];  //copia y pega la fila de arriba abajo
                     }
                 }
-                puntos++;
+                puntos++;                               //suma 1 punto por ada línea desaparecida
             }
         }
     }
@@ -194,7 +194,7 @@
         velocidad=Math.max(velocidad-1,500);
     }
 
-//6.Listeners
+//Listeners
 document.getElementById("empezar").addEventListener("click",function(e){
     cargar();
 });
@@ -202,16 +202,16 @@ document.getElementById("empezar").addEventListener("click",function(e){
 addEventListener("keydown", function (e){
     e.preventDefault();
     switch(e.keyCode){
-        case 37:
+        case 37:            //izquierda
             moverPieza(-1);
             break;
-        case 38:
+        case 38:            //arriba
             rotarPieza();
             break;
-        case 39:
+        case 39:            //derecha
             moverPieza(1);
             break;
-        case 40:
+        case 40:            //abajo
             bajarPieza();
             break;
     }
