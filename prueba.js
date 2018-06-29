@@ -25,8 +25,16 @@ var diseño=[
     [1,0,5,6,3], //pieza7
 ];
 
-var sound = new Audio();
-sound.src = "./rotacion.mp3";
+var sounds={
+    rotate:"./rotacion.mp3",
+    fondo: "./fondo.mp3",
+};
+
+var sonidoRotando = new Audio();
+sonidoRotando.src = sounds.rotate;
+var sonidoFondo = new Audio();
+sonidoFondo.src = sounds.fondo;
+
 
 function start(){
     bajarPieza();
@@ -191,14 +199,22 @@ function colores(){
         html+=lt+"/tr>";
     }
     html+=lt+"/table>";
-    html+="<br/>Score: " + puntos;
-    html+="<br/>Score 1st Player: " + record;
     document.getElementById("tetris").innerHTML=html;
+
+    puntuación();
     velocidad=Math.max(velocidad-1,500);
+}
+
+function puntuación (){
+    var score =document.getElementById("score");
+    var player1 =document.getElementById("record");
+    score.innerHTML = "Actual Player Score: " + puntos;
+    player1.innerHTML = "Past Player Score: " + record;
 }
 
 //Listeners
 document.getElementById("empezar").addEventListener("click",function(e){
+    sonidoFondo.play()
     cargar();
 });
 
@@ -209,7 +225,7 @@ addEventListener("keydown", function (e){
             moverPieza(-1);
             break;
         case 38:            //arriba
-            sound.play()
+            sonidoRotando.play()
             rotarPieza();
             break;
         case 39:            //derecha
